@@ -23,13 +23,26 @@ let ListingsModel = mongoose.model('Listing', listingSchema);
 
 
 function write(listing, callback) {
-  ListingsModel.create(listing, callback)
+  ListingsModel.create(listing, callback);
 }
 
 function getAllListings(callback) {
   ListingsModel.find({}, callback);
 }
 
-module.exports.ListingsModel = ListingsModel;
-module.exports.write = write;
+function updateListing(query, newData, callback) {
+  ListingsModel.findOneAndUpdate(query, newData, callback);
+}
+
+function removeListing(query, callback) {
+  ListingsModel.deleteOne(query, callback);
+}
+
+module.exports = {
+  ListingsModel,
+  write,
+  getAllListings,
+  updateListing,
+  removeListing,
+}
 exports.getAllListings = getAllListings;
