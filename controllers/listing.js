@@ -22,8 +22,21 @@ getListings = (req, res) => {
   }
  )
 }
+post = (req, res) => {
+
+}
+put = (req, res) => {
+
+}
+remove = (req, res) => {
+
+}
+
 module.exports = {
-  getListings
+  getListings,
+  post,
+  put,
+  remove,
 }
 
 
