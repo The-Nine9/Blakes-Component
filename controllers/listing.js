@@ -12,7 +12,7 @@ getListings = (req, res) => {
   mongo.connect();
   query.find((err, listings) => {
     if (err) {
-      res.status(404).send('error');
+      res.sendStatus(404);
       console.log(err.message);
       mongo.db.close();
     } else {
@@ -27,11 +27,11 @@ post = (req, res) => {
   mongo.connect();
   listings.write(req.body, (err, data) => {
     if (err) {
-      res.status(404).send('error');
+      res.sendStatus(404);
       console.log(err.message);
       mongo.db.close();
     } else {
-      res.status(200).send(data);
+      res.sendStatus(201);
       mongo.db.close();
     }
   })
@@ -42,11 +42,11 @@ put = (req, res) => {
   const query = listings.ListingsModel.where({ listing_id: req.params.id });
   listings.updateListing(query, req.body, (err) => {
     if (err) {
-      res.status(404).send('error');
+      res.sendStatus(404);
       console.log(err.message);
       mongo.db.close();
     } else {
-      res.status(200).send('success');
+      res.sendStatus(204);
       mongo.db.close();
     }
   })
@@ -57,11 +57,11 @@ remove = (req, res) => {
   const query = listings.ListingsModel.where({ listing_id: req.params.id });
   listings.removeListing(query, (err) => {
     if (err) {
-      res.status(404).send('error');
+      res.sendStatus(404);
       console.log(err.message);
       mongo.db.close();
     } else {
-      res.status(200).send('success');
+      res.sendStatus(204);
       mongo.db.close();
     }
   })
