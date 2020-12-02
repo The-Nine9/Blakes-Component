@@ -20,7 +20,7 @@ app.listen(PORT, () => {
 // CRUD
 
 // app.get('/db', controller.get);
-app.get('/*/:id/homesData', controller.getListings);
-app.post('/*/:id/addHomeData', controller.post)
-app.put('/*/:id/updateHomeData', controller.put)
-app.delete('/*/:id/removeHomeData', controller.remove)
+app.get('/*/:id/homes', controller.getListings);
+app.post('/*/:id/homes', controller.post);
+app.put('/*/:id/homes', controller.put);
+app.delete('/*/:id/homes', controller.remove);

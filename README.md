@@ -7,10 +7,22 @@ MAIN GALLERY
   - https://github.com/the-nine9/Blakes-proxy
 
 ## CRUD operations
-  - app.get('/*/:id/homesData', controller.getListings)
-  - app.post('/*/:id/addHomeData', controller.post)
-  - app.put('/*/:id/updateHomeData', controller.put)
-  - app.delete('/*/:id/removeHomeData', controller.remove)
+#  - GET -> URL: localhost/gallery/100/homes
+      query: req.params.id
+      success response: JSON OBJ of listing with id 100]
+#  - POST -> URL: localhost/gallery/101/homes
+      query: req.params.id
+      update: (JSON OBJ) request body
+      success response: JSON OBJ of added data
+#  - PUT -> URL: localhost/gallery/101/homes
+      query: req.params.id
+      update: (JSON OBJ) request body
+      success response: String 'success'
+#  - DELETE -> URL: localhost/gallery/101/homes
+      query: req.params.id
+      update: (JSON OBJ) request body
+      success response: String 'success'
+
 
 ## Development
 
