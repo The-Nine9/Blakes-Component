@@ -3,7 +3,7 @@ var mongo = require('./mongo.js');
 
 mongoose.connect('mongodb://localhost/main-gallery-listings');
 
-var listingSchema = mongoose.Schema ({
+const listingSchema = mongoose.Schema({
   listing_id: Number,
   topHeader: {
     sale: Boolean,
@@ -20,7 +20,6 @@ var listingSchema = mongoose.Schema ({
 })
 
 let ListingsModel = mongoose.model('Listing', listingSchema);
-
 
 function write(listing, callback) {
   ListingsModel.create(listing, callback);
