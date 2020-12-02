@@ -12,7 +12,7 @@ getListings = (req, res) => {
   mongo.connect();
   query.find((err, listings) => {
     if (err) {
-      res.status(404)
+      res.status(404).send('error');
       console.log(err.message);
       mongo.db.close();
     } else {
