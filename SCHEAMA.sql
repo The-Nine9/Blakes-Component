@@ -9,50 +9,36 @@ WITH
    [IS_TEMPLATE = false ];
 
 
-CREATE TABLE [IF NOT EXISTS] listing(
-  listing_id SERIAL PRIMARY KEY,
-  sale BOOLEAN,
-  pending BOOLEAN,
-  new BOOLEAN,
-  construction BOOLEAN,
-  address TEXT,
-  price INTEGER,
-  bed INTEGER,
-  bath INTEGER,
-  images TEXT[],
-);
-
-----------------------------------------------
-[SECONDARY OPTION]
 DROP TABLE IF EXISTS listing;
 DROP TABLE IF EXISTS header;
 DROP TABLE IF EXISTS images;
 
 CREATE TABLE [IF NOT EXISTS] listing (
-  listing_id SERIAL PRIMARY KEY,
-  header INTEGER FOREIGN KEY,
-  address TEXT,
-  price INTEGER,
-  bed INTEGER,
-  bath INTEGER,
-  PRIMARY KEY(header_id),
+  listing_no SERIAL NOT NULL PRIMARY KEY,
+  header INTEGER NOT NULL FOREIGN KEY,
+  address VARCHAR(50) UNIQUE NOT NULL,
+  price INTEGER NOT NULL CHECK ( price > 0 AND price < 1000000000),
+  bed SMALLINT NOT NULL CHECK ( bed > 0 AND bed < 100 ),
+  bath SMALLINT NOT NULL CHECK ( bath > 0 AND bath < 100 ),
+  PRIMARY KEY(header_no),
     CONSTRAINT fk_header
-      FOREIGN KEY(header_id)
-	      REFERENCES header(header_id)
+      FOREIGN KEY(header_no)
+	      REFERENCES header(header_no)
 );
 
 CREATE TABLE [IF NOT EXISTS] header (
-  header_id SERIAL PRIMARY KEY,
-  sale BOOLEAN,
-  pending BOOLEAN,
-  new BOOLEAN,
-  construction BOOLEAN,
+  header_no SERIAL NOT NULL PRIMARY KEY,
+  sale BOOLEAN NOT NULL,
+  pending BOOLEAN NOT NULL,
+  new BOOLEAN NOT NULL,
+  construction BOOLEAN NOT NULL,
 );
 
 CREATE TABLE [IF NOT EXISTS] images (
-  listing INT,
-  images TEXT,
+  image_no SERIAL NOT NULL PRIMARY KEY,
+  listing INT NOT NULL FOREIGN KEY,
+  images VARCHAR(100) NOT NULL,
     CONSTRAINT fk_listing
-      FOREIGN KEY(listing_id)
-	      REFERENCES listing(listing_id)
+      FOREIGN KEY(listing_no)
+	      REFERENCES listing(listing_no)
 );
