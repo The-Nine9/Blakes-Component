@@ -1,4 +1,4 @@
-CREATE DATABASE [IF NOT EXISTS] gallery
+CREATE DATABASE IF NOT EXISTS gallery
 WITH
    [OWNER =  admin]
    [TEMPLATE = template]
@@ -26,15 +26,12 @@ CREATE TABLE [IF NOT EXISTS] listing (
   construction BOOLEAN NOT NULL,
 );
 
--- CREATE TABLE [IF NOT EXISTS] header (
---   header_no SERIAL NOT NULL PRIMARY KEY,
--- );
 
 CREATE TABLE [IF NOT EXISTS] images ( -- keep track of image order
   image_no SERIAL NOT NULL PRIMARY KEY,
   listing INT NOT NULL FOREIGN KEY,
   images VARCHAR(100) NOT NULL,
-    CONSTRAINT fk_listing -- lose foreign for seeding
-      FOREIGN KEY(listing_no)
+    CONSTRAINT fk_listing -- only used to give name to constraint (not required)
+      FOREIGN KEY(listing_no)-- lose foreign for seeding
 	      REFERENCES listing(listing_no)
 );
