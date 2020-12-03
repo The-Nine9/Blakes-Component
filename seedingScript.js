@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = require('./db/schema.js');
+const fs = require('fs');
+const path = require('path');
 // let faker = require('faker');
 
 // TODO:
 // 1) Take out hardcoded data and create helper functions to generate inputs.
 // 2) Drop database before wrtiting to again.
-
+function seedDB () {
+  fs.writeFileSync(__dirname + )
+}
 
 function createRecord(... args) { // will this work
   const listing = {

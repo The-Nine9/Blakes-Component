@@ -9,7 +9,12 @@ db.createDatabase('mydb')
   );
 db.useDatabase('mydb'); // add to above promise?
 
-const schema = { // remove constraints for seeds
+// nested schemas --
+// add user account obj,
+// listing schema, add saved comp
+// full address schema
+
+const schema = { // remove ALL constraints for seeds
   message: 'Customer Validation Failed',
   level: 'strict',
   rule: {
