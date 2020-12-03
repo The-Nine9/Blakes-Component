@@ -9,7 +9,7 @@ db.createDatabase('mydb')
   );
 db.useDatabase('mydb'); // add to above promise?
 
-const schema = {
+const schema = { // remove constraints for seeds
   message: 'Customer Validation Failed',
   level: 'strict',
   rule: {
@@ -47,15 +47,19 @@ const schema = {
       },
       sale: { // would like to refactor to be status (enum [ sale, pending, new, construction ])
         type: 'boolean',
+        default: true,
       },
       pending: {
         type: 'boolean',
+        default: false,
       },
       new: {
         type: 'boolean',
+        default: false,
       },
       construction: {
         type: 'boolean',
+        default: false,
       },
     },
     required: [
