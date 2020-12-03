@@ -1,7 +1,7 @@
 ## Server API
 
 ### Get restaurant info
-  * GET `/gallery/:id/HomesData`
+  * GET `/homes/:id/gallery`
 
 **Path Parameters:**
   * `id` listing id
@@ -86,4 +86,6 @@
   * `id` restaurant id
 
 **Success Status Code:** `204`
+
+<!-- add just image CRUD -->
 
