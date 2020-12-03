@@ -1,6 +1,7 @@
 const db = require('arangojs')();
+const addSecurity = require('./arangoSecurity');
 
-
+addSecurity();
 db.createDatabase('mydb')
   .then(
     () => console.log('Database created'),

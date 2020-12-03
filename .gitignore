@@ -26,5 +26,5 @@ client/dist/bundle.js
 
 node_modules
 
-## Key Files
-*.pem
+## Security
+arangoSecurity.js
