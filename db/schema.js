@@ -4,18 +4,18 @@ var mongo = require('./mongo.js');
 mongoose.connect('mongodb://localhost/main-gallery-listings');
 
 const listingSchema = mongoose.Schema({
-  listing_id: Number,
-  topHeader: {
+  listing_id: Number, // need to maintain reference to all document data
+  topHeader: {        // isolated for front end ease, could seperate into individuals for storage
     sale: Boolean,
     pending: Boolean,
     new: Boolean,
     construction: Boolean,
   },
-  address: String,
-  price: Number,
-  bed: Number,
-  bath: Number,
-  images: Array,
+  address: String, // most be unique and formatted correctly, maybe break it up into parts of address?
+  price: Number,   //
+  bed: Number,     // limited options could seperate for storage optimization
+  bath: Number,    // limited options could seperate for storage optimization
+  images: Array,   // hmmmmmm
 
 })
 
