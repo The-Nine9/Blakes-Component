@@ -85,3 +85,5 @@ CREATE TABLE images ( -- keep track of image order
       --FOREIGN KEY(listing_no)-- lose foreign for seeding
 	     -- REFERENCES listing(listing_no)
 );
+
+\copy images(url, description) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/images.csv' DELIMITER ',' CSV HEADER;
