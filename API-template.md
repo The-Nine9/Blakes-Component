@@ -4,7 +4,7 @@
   * GET `/home/:id/gallery`
 
 **Path Parameters:**
-  * `id` listing id
+  * `id` home id
 
 **Success Status Code:** `200`
 
@@ -30,7 +30,7 @@
 ### Add home
   * POST `/home/:id/gallery`
 
-**Success Status Code:** `204`
+**Success Status Code:** `201`
 
 **Request Body**: Expects JSON with the following keys.
 
@@ -58,7 +58,7 @@
 **Path Parameters:**
   * `id` home id
 
-**Success Status Code:** `201`
+**Success Status Code:** `202`
 
 **Request Body**: Expects JSON with any of the following keys (include only keys to be updated)
 
@@ -85,7 +85,7 @@
 **Path Parameters:**
   * `id` home id
 
-**Success Status Code:** `204`
+**Success Status Code:** `202`
 
 <!-- add just image CRUD -->
 

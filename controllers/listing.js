@@ -45,7 +45,7 @@ module.exports = {
         console.log(err.message);
         mongo.db.close();
       } else {
-        res.sendStatus(204);
+        res.sendStatus(202);
         mongo.db.close();
       }
     });
@@ -60,7 +60,7 @@ module.exports = {
         console.log(err.message);
         mongo.db.close();
       } else {
-        res.sendStatus(204);
+        res.sendStatus(202);
         mongo.db.close();
       }
     });
