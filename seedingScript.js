@@ -8,7 +8,7 @@ const path = require('path');
 // 1) Take out hardcoded data and create helper functions to generate inputs.
 // 2) Drop database before wrtiting to again.
 function seedDB () {
-  fs.writeFileSync(__dirname + )
+  fs.writeFileSync(filePath, randomData )
 }
 
 function createRecord(... args) { // will this work
