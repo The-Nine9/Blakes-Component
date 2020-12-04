@@ -60,7 +60,7 @@ function agentCSV(count) {
 // owner_status
 // rental_applications
 function userCSV(count) {
-  file = path.join(__dirname, 'z_csv/users.csv');
+  file = path.join(__dirname, 'z_csv/user_data.csv');
   const stream = fs.createWriteStream(file);
 
   stream.write('user_name,pswhash,first_name,last_name,email,phone,owner_status,rental_applications\n');
