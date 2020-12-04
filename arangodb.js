@@ -230,9 +230,10 @@ const listingSchema = { // remove ALL constraints for seeds
 };
 
 // EXAMPLE
+
 const exampleData = {
   listing: {
-    _ref: 'address' // ????
+    _ref: 'address', // ????
     listing_no: 1,
     address: '13123 street ave, City, State, 91232',
     price: 1243121,
