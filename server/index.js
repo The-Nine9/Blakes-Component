@@ -1,6 +1,6 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var controller = require('../controllers/listing.js');
+const express = require('express');
+const bodyParser = require('body-parser');
+const controller = require('../controllers/listing.js');
 
 // const path = require('path')
 
@@ -8,8 +8,7 @@ const app = express();
 const PORT = 8040;
 
 app.use(bodyParser.json());
-app.use('/gallery/:id', express.static('client/dist'));
-
+app.use('/home/:id', express.static('client/dist'));
 
 // app.get('/listings/:id/db', controller.getAll);
 
@@ -20,7 +19,8 @@ app.listen(PORT, () => {
 // CRUD
 
 // app.get('/db', controller.get);
-app.get('/*/:id/homes', controller.getListings);
-app.post('/*/:id/homes', controller.post);
-app.put('/*/:id/homes', controller.put);
-app.delete('/*/:id/homes', controller.remove);
+app.get('/*/:id/gallery', controller.getListings);
+app.post('/*/:id/gallery', controller.post);
+app.put('/*/:id/gallery', controller.put);
+app.delete('/*/:id/gallery', controller.remove);
+app.patch('/*/:id/gallery', controller.addImage);
