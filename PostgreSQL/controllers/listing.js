@@ -1,4 +1,4 @@
-const mongo = require('../db/mongo.js');
+// need to initialize connection with postgresql
 
 function getListings(req, res) {
   const query = listings.ListingsModel.where({ listing_id: req.params.id });
