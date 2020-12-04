@@ -2,7 +2,6 @@
 /* eslint-disable no-plusplus */
 const fs = require('fs');
 const path = require('path');
-const images = require('./imagesColl');
 
 let file;
 
@@ -27,11 +26,10 @@ function listingCSV(count) {
 
   stream.write('address,price,bed,bath,sale,pending,new,construction,description,sqft,shared,property_type\n');
   while (count > 0) {
-    stream.write('42 lorem way\, ipsum\, CA\, 94040,2500000,2,3,1,0,0,0,this is a description of the home,12000,0,Single Family Home\n');
+    stream.write('"42 lorem way, ipsum, CA, 94040",2500000,2,3,1,0,0,0,this is a description of the home,12000,0,Single Family Home\n');
     count--;
   }
 }
-listingCSV(10);
 
 // // AGENT
 // agent_no SERIAL
@@ -50,7 +48,6 @@ function agentCSV(count) {
     count--;
   }
 }
-agentCSV(10);
 
 // // USER
 // user_no SERIAL
@@ -72,7 +69,6 @@ function userCSV(count) {
     count--;
   }
 }
-userCSV(10);
 
 // // AMENITIES
 // ac
@@ -93,7 +89,6 @@ function amenitiesCSV(count) {
     count--;
   }
 }
-amenitiesCSV(10);
 
 // // IMAGES
 // image_no SERIAL
@@ -109,4 +104,11 @@ function imageCSV(count) {
     count--;
   }
 }
-imageCSV(10);
+
+module.exports = {
+  agentCSV,
+  amenitiesCSV,
+  imageCSV,
+  listingCSV,
+  userCSV,
+};
