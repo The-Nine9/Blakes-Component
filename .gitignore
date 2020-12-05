@@ -28,3 +28,7 @@ node_modules
 
 ## Key Files
 *.pem
+*/credentials.js
+
+## CSV Files
+*.csv
