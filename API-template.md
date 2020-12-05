@@ -1,10 +1,10 @@
 ## Server API
 
 ### Get home info
-  * GET `/homes/:id/gallery`
+  * GET `/home/:id/gallery`
 
 **Path Parameters:**
-  * `id` listing id
+  * `id` home id
 
 **Success Status Code:** `200`
 
@@ -28,7 +28,7 @@
 ```
 
 ### Add home
-  * POST `/gallery/:id/HomesData`
+  * POST `/home/:id/gallery`
 
 **Success Status Code:** `201`
 
@@ -53,12 +53,12 @@
 
 
 ### Update home info
-  * Put `/gallery/:id/HomesData`
+  * Put `/home/:id/gallery`
 
 **Path Parameters:**
   * `id` home id
 
-**Success Status Code:** `204`
+**Success Status Code:** `202`
 
 **Request Body**: Expects JSON with any of the following keys (include only keys to be updated)
 
@@ -80,12 +80,27 @@
 ```
 
 ### Delete home
-  * DELETE `/homes/:id/gallery`
+  * DELETE `/home/:id/gallery`
 
 **Path Parameters:**
   * `id` home id
 
-**Success Status Code:** `204`
+**Success Status Code:** `202`
 
 <!-- add just image CRUD -->
 
+### Add image to home
+  * PATCH`/home/:id/gallery`
+
+**Path Parameters:**
+  * `id` home id
+
+**Success Status Code:** `201`
+
+**Request Body**: Expects JSON with the following keys.
+
+```json
+    {
+      "url": "String",
+    }
+```
