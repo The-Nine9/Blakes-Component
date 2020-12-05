@@ -1,57 +1,43 @@
-const fs = require('fs');
-const path = require('path');
-const pop = require('./csvGen');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+const { Pool } = require('pg');
 
-// pop.agentCSV(1);
-// pop.amenitiesCSV(1);
-// pop.imageCSV(50);
-// pop.listingCSV(1);
-// pop.userCSV(1);
+const gen = require('./createCSV');
+gen.listing();
+gen.agents();
+gen.user_data();
+gen.amenities();
+gen.images();
+const credentials = require('./credentials');
 
-function imageCSV(count) {
-  file = path.join(__dirname, 'z_csv/images.csv');
-  const stream = fs.createWriteStream(file);
+// const pool = new Pool(credentials);
 
-  stream.write('image_no,url,description\n');
-  while (count > 0) {
-    stream.write('https://picsum.photos/200/300,This is a photo of a house\n');
-    count--;
+const connectAndSeed = (columns, path) => {
+  pool.query(`\copy images(${columns}) FROM ${path} DELIMITER ',' CSV HEADER;`, (err, res) => {
+    console.log(err, res);
+    pool.end();
+  });
+};
+
+// \copy images(url, description) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/images.csv' DELIMITER ',' CSV HEADER;
+
+// \copy agent(first_name, last_name, email, phone) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/agents.csv' DELIMITER ',' CSV HEADER;
+
+// \copy user_data(user_name, pswhash, first_name, last_name, email, phone, owner_status, rental_applications) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/user_data.csv' DELIMITER ',' CSV HEADER;
+
+// \copy amenities(ac, balcony_deck, furnished, hardwood, wheelchair, garage_parking, off_street_parking, laundry, pets) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/amenities.csv' DELIMITER ',' CSV HEADER;
+
+// \copy listing(address, price, bed, bath, sale, pending, new, construction, description, sqft, shared, property_type) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/listing.csv' DELIMITER ',' CSV HEADER;
+
+const importCSV = async (columns, path) => {
+  console.log('Importing...');
+  try {
+    const { stdout, stderr } = await exec(`\copy agents(${columns}) FROM ${path} DELIMITER ',' CSV HEADER;`);
+    if (stdout) { console.log(`Output: ${stdout}`); }
+    if (stderr) { console.log(`Err: ${stderr}`); }
+  } catch (err) {
+    console.log(`${err}`);
   }
-}
-
-function writeOneMillionTimes(writer, data, encoding, callback) {
-  let i = 50000000;
-  write();
-  function write() {
-    let ok = true;
-    do {
-      i--;
-      if (i === 0) {
-        // Last time!
-        writer.write(data, encoding, callback);
-      } else {
-        // See if we should continue, or wait.
-        // Don't pass the callback, because we're not done yet.
-        ok = writer.write(data, encoding);
-      }
-    } while (i > 0 && ok);
-    if (i > 0) {
-      // Had to stop early!
-      // Write some more once it drains.
-      writer.once('drain', write);
-    }
-  }
-}
-
-writeOneMillionTimes(
-  fs.createWriteStream(path.join(__dirname, 'z_csv/images.csv')),
-  'https://picsum.photos/200/300,This is a photo of a house\n',
-  'utf8',
-  (err, data) => {
-    if (err) {
-      console.log('everything got fucked up');
-    } else {
-      console.log('finished seeding images');
-    }
-  },
-);
+};
+// importCSV(gen.columns.agents, gen.file.agents);
+// connectAndSeed(gen.columns.agents, gen.file.agents);

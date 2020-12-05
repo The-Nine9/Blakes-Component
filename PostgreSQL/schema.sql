@@ -1,4 +1,3 @@
-/* eslint-disable * */
 DROP DATABASE IF EXISTS gallery;
 CREATE DATABASE gallery;
 -- WITH
@@ -20,7 +19,7 @@ DROP TABLE IF EXISTS listing;
 
 CREATE TABLE listing (
   listing_no SERIAL PRIMARY KEY,
-  address VARCHAR(50) UNIQUE NOT NULL,
+  address VARCHAR(50) NOT NULL, --unique after seeding
   price INTEGER NOT NULL, -- CHECK ( price > 0 AND price < 1000000000),
   bed SMALLINT NOT NULL, -- CHECK ( bed > 0 AND bed < 100 ),
   bath SMALLINT NOT NULL,-- CHECK ( bath > 0 AND bath < 100 ),
@@ -86,4 +85,5 @@ CREATE TABLE images ( -- keep track of image order
 	     -- REFERENCES listing(listing_no)
 );
 
-\copy images(url, description) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/images.csv' DELIMITER ',' CSV HEADER;
+--CLIENT -> SERVER -> DB COPY METHOD EXAMPLE
+-- \copy images(url, description) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/images.csv' DELIMITER ',' CSV HEADER;
