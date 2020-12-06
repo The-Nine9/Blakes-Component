@@ -10,7 +10,7 @@
   "scripts": {
     "start": "nodemon server/index.js",
     "webpack": "webpack -d --watch",
-    "seed-database": "node ./db/seed.js",
+    "seed": "./PostgreSQL/seed.sh",
     "test": "jest",
     "lint": "./node_modules/.bin/eslint"
   },
