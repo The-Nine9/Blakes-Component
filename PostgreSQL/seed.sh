@@ -1,17 +1,14 @@
 #!/bin/bash
 
 # My first script
-chmod 777 Postgres/csvGen.js
+# chmod 777 Postgres/csvGen.js
 
-r=`tput setaf 1`;
-g=`tput setaf 2`;
-r=`tput sgr0`;
-b=`tput blink`;
 while true; do
+    chmod 777 PostgreSQL/csvGen.js
     read -p "do you wish to create the CSV files?" yn
     case $yn in
         [Yy]* ) echo "This may take a moment";node PostgreSQL/createCSV.js; tput setaf 2; echo "ALL CSV FILES UPDATED"; tput sgr0; break;;
-        [Nn]* ) echo "im sorry to hear that"; break;;
+        [Nn]* ) tput setaf 1; echo "im sorry to hear that"; tput sgr0; break;;
         * ) tput setaf 1; echo "Please answer yes or no."; tput sgr0 ;;
     esac
 done
@@ -20,7 +17,7 @@ while true; do
     read -p "do you wish to drop and recreate all tables?" yn
     case $yn in
         [Yy]* ) echo "please enter your password";read pswd;echo "please enter the DB you wish to populate";read db; echo "BEGINNING TO SCURB DB"; PGPASSWORD=${pswd} psql -U postgres < PostgreSQL/schema.sql; tput setaf 2; echo "DB HAS BEEN SCRUBBED"; tput sgr0; break;;
-        [Nn]* ) echo "im sorry to hear that"; break;;
+        [Nn]* ) tput setaf 1; echo "im sorry to hear that"; tput sgr0; break;;
         * ) tput setaf 1; echo "Please answer yes or no."; tput sgr0 ;;
     esac
 done
