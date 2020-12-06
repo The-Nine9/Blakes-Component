@@ -57,9 +57,7 @@ CREATE TABLE user_data ( --updated the table name
   owner_status VARCHAR(20) NOT NULL,
   rental_applications BOOLEAN
 );
---add listing ????????????????
 
--- home details table (extra)
 CREATE TABLE amenities (
   amenities_no SERIAL PRIMARY KEY,
   ac BOOLEAN,
