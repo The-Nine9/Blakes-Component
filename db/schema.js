@@ -1,64 +1,25 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
-
-@Blake-Whitham
-Learn Git and GitHub without any code!
-Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
-
-
-The-Nine9
-/
-Main-Gallery
-0
-0
-0
-Code
-Issues
-Pull requests
-1
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-Main-Gallery/db/schema.js /
-@Blake-Whitham
-Blake-Whitham Corrected API Design
-Latest commit 68ce682 2 days ago
- History
- 2 contributors
-@BrandonRussell2020@Blake-Whitham
-48 lines (38 sloc)  958 Bytes
-
-var mongoose = require('mongoose');
-var mongo = require('./mongo.js');
+const mongoose = require('mongoose');
+const mongo = require('./mongo.js');
 
 mongoose.connect('mongodb://localhost/main-gallery-listings');
 
-const listingSchema = mongoose.Schema ({
-  listing_id: Number,
-  topHeader: {
+const listingSchema = mongoose.Schema({
+  listing_id: Number, // need to maintain reference to all document data
+  topHeader: {        // isolated for front end ease, could seperate into individuals for storage
     sale: Boolean,
     pending: Boolean,
     new: Boolean,
     construction: Boolean,
   },
-  address: String,
-  price: Number,
-  bed: Number,
-  bath: Number,
-  images: Array,
+  address: String, // most be unique and formatted correctly, maybe break it up into parts of address?
+  price: Number,   //
+  bed: Number,     // limited options could seperate for storage optimization
+  bath: Number,    // limited options could seperate for storage optimization
+  images: Array,   // hmmmmmm
 
 })
 
 let ListingsModel = mongoose.model('Listing', listingSchema);
-
 
 function write(listing, callback) {
   ListingsModel.create(listing, callback);
@@ -82,5 +43,5 @@ module.exports = {
   getAllListings,
   updateListing,
   removeListing,
-}
+};
 exports.getAllListings = getAllListings;

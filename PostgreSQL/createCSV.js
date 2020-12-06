@@ -43,9 +43,9 @@ function callbackFunc(dataName, err) {
   }
 }
 
-function createCSV(writer, content, encoding, callback, columns, rows) {
+async function createCSV(writer, content, encoding, callback, columns, rows) {
   let i = rows;
-  write();
+  await write();
   function write() {
     let ok = true;
     do {
@@ -70,6 +70,13 @@ function createCSV(writer, content, encoding, callback, columns, rows) {
     }
   }
 }
+
+createCSV(stream.listing, data.listing, 'utf8', () => callbackFunc('listings'), columns.listing, 10000000);
+createCSV(stream.user_data, data.user_data, 'utf8', () => callbackFunc('user_data'), columns.user_data, 10000000);
+createCSV(stream.agents, data.agents, 'utf8', () => callbackFunc('agents'), columns.agents, 10000000);
+createCSV(stream.amenities, data.amenities, 'utf8', () => callbackFunc('amenities'), columns.amenities, 10000000);
+createCSV(stream.images, data.images, 'utf8', () => callbackFunc('images'), columns.images, 50000000);
+
 module.exports = {
   file,
   columns,
