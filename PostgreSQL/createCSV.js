@@ -65,7 +65,7 @@ function createAmenities(num) {
   return `${randomizer(boolean, num + 1)},${randomizer(boolean, num + 2)},${randomizer(boolean, num + 3)},${randomizer(boolean, num + 4)},${randomizer(boolean, num + 5)},${randomizer(boolean, num + 6)},${randomizer(boolean, num + 7)},${randomizer(boolean, num + 8)},${randomizer(boolean, num + 9)}\n`;
 }
 function createImages(num) {
-  return `${(num % 50) + 1},https://picsum.photos/200/300,${lorem.generateSentences(1)}\n`;
+  return `${(num % 10000000)},https://picsum.photos/200/300,${lorem.generateSentences(1)}\n`;
 }
 
 async function createCSV(target, rows) {
@@ -114,14 +114,15 @@ async function createCSV(target, rows) {
         // first time! write header
         writer.write(header, 'utf8');
       }
-      i--;
       if (i === 0) {
         // Last time!
         writer.write(content(i), 'utf8', () => callbackFunc(target));
+        i--;
       } else {
         // See if we should continue, or wait.
         // Don't pass the callback, because we're not done yet.
         ok = writer.write(content(i), 'utf8');
+        i--;
       }
     } while (i > 0 && ok);
     if (i > 0) {

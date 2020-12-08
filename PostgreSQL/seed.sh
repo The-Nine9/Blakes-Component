@@ -49,3 +49,38 @@ while true; do
 done
 
 
+while true; do
+    read -p "do you wish add foreign key constraint AGENT to LISTING table?" yn
+    case $yn in
+        [Yy]* ) PGPASSWORD=${pswd} psql -U postgres ${db} -c "ALTER TABLE listing ADD CONSTRAINT agentfk FOREIGN KEY (agent) REFERENCES agent (id) MATCH FULL"; tput setaf 2; echo "FOREIGN KEY ADDED"; tput sgr0; break;;
+        [Nn]* ) tput setaf 1; echo "im sorry to hear that"; tput sgr0; break;;
+        * ) tput setaf 1; echo "Please answer yes or no."; tput sgr0 ;;
+    esac
+done
+
+while true; do
+    read -p "do you wish add foreign key constraint OWNER to LISTING table?" yn
+    case $yn in
+        [Yy]* ) PGPASSWORD=${pswd} psql -U postgres ${db} -c "ALTER TABLE listing ADD CONSTRAINT ownerfk FOREIGN KEY (owner) REFERENCES owner (id) MATCH FULL"; tput setaf 2; echo "FOREIGN KEY ADDED"; tput sgr0; break;;
+        [Nn]* ) tput setaf 1; echo "im sorry to hear that"; tput sgr0; break;;
+        * ) tput setaf 1; echo "Please answer yes or no."; tput sgr0 ;;
+    esac
+done
+
+while true; do
+    read -p "do you wish add foreign key constraint OWNER to LISTING table?" yn
+    case $yn in
+        [Yy]* ) PGPASSWORD=${pswd} psql -U postgres ${db} -c "ALTER TABLE listing ADD CONSTRAINT amenitiesfk FOREIGN KEY (amenities) REFERENCES amenities (id) MATCH FULL"; tput setaf 2; echo "FOREIGN KEY ADDED"; tput sgr0; break;;
+        [Nn]* ) tput setaf 1; echo "im sorry to hear that"; tput sgr0; break;;
+        * ) tput setaf 1; echo "Please answer yes or no."; tput sgr0 ;;
+    esac
+done
+
+while true; do
+    read -p "do you wish add foreign key constraint LISTING to IMAGES table?" yn
+    case $yn in
+        [Yy]* ) PGPASSWORD=${pswd} psql -U postgres ${db} -c "ALTER TABLE images ADD CONSTRAINT listingfk FOREIGN KEY (listing) REFERENCES listing (id) MATCH FULL"; tput setaf 2; echo "FOREIGN KEY ADDED"; tput sgr0; break;;
+        [Nn]* ) tput setaf 1; echo "im sorry to hear that"; tput sgr0; break;;
+        * ) tput setaf 1; echo "Please answer yes or no."; tput sgr0 ;;
+    esac
+done
