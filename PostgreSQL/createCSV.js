@@ -1,49 +1,110 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-use-before-define */
+const { LoremIpsum } = require('lorem-ipsum');
+
 const fs = require('fs');
 const path = require('path');
+const c = require('./collections.js');
+
+const lorem = new LoremIpsum({
+  sentencesPerParagraph: {
+    max: 8,
+    min: 4,
+  },
+  wordsPerSentence: {
+    max: 16,
+    min: 4,
+  },
+});
 
 const file = {
   listing: path.join(__dirname, 'z_csv/listings.csv'),
-  agents: path.join(__dirname, 'z_csv/agents.csv'),
-  user_data: path.join(__dirname, 'z_csv/user_data.csv'),
+  agent: path.join(__dirname, 'z_csv/agents.csv'),
+  owner: path.join(__dirname, 'z_csv/owner.csv'),
   amenities: path.join(__dirname, 'z_csv/amenities.csv'),
   images: path.join(__dirname, 'z_csv/images.csv'),
 };
 
 const stream = {
   listing: fs.createWriteStream(file.listing),
-  agents: fs.createWriteStream(file.agents),
-  user_data: fs.createWriteStream(file.user_data),
+  agent: fs.createWriteStream(file.agent),
+  owner: fs.createWriteStream(file.owner),
   amenities: fs.createWriteStream(file.amenities),
   images: fs.createWriteStream(file.images),
 };
 
-const data = {
-  listing: '"42 lorem way, ipsum, CA, 94040",2500000,2,3,1,0,0,0,this is a description of the home,12000,0,Single Family Home\n',
-  agents: 'Chuck,Norris,Chuckster@gmail.com,(555) 555-5555\n',
-  user_data: 'HunkNorris815,AF765FA983F,Chuck,Norris,Chuckster@gmail.com,(818) 555-5555,Home Owner, 0\n',
-  amenities: `${Math.round(Math.random())},${Math.round(Math.random())},${Math.round(Math.random())},${Math.round(Math.random())},${Math.round(Math.random())},${Math.round(Math.random())},${Math.round(Math.random())},${Math.round(Math.random())},${Math.round(Math.random())}\n`,
-  images: 'https://picsum.photos/200/300,This is a photo of a house\n',
-};
-
 const columns = {
-  listing: 'address,price,bed,bath,sale,pending,new,construction,description,sqft,shared,property_type\n',
-  agents: 'first_name,last_name,email,phone\n',
-  user_data: 'user_name,pswhash,first_name,last_name,email,phone,owner_status,rental_applications\n',
+  listing: 'address,price,bed,bath,sale,pending,new,construction,description,sqft,shared,property_type,agent,owner,amenities\n',
+  agent: 'first_name,last_name,email,phone\n',
+  owner: 'user_name,pswhash,first_name,last_name,email,phone,owner_status,rental_applications\n',
   amenities: 'ac,balcony_deck,furnished,hardwood,wheelchair,garage_parking,off_street_parking,laundry,pets\n',
-  images: 'url,description\n',
+  images: 'listing_no,url,description\n',
 };
 
-function callbackFunc(dataName, err) {
-  if (err) {
-    console.log(`everything got fucked up because of ${err}`);
-  } else {
-    console.log(`finished seeding ${dataName}`);
-  }
+const num10 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const boolean = [1, 0, 0, 1, 1, 0, 1, 0];
+const propertyType = ['Single Family Home', 'Apartment', 'Condo', 'Cabin'];
+const status = ['Owner', 'Realtor', 'Bank Representative'];
+function addressMaker(i) {
+  return `${c.num[i % c.num.length]} ${c.street[i % c.street.length]}\, ${c.city[i % c.city.length]}\, ${c.state[i % c.state.length]} ${c.zip[i % c.zip.length]} `;
+}
+function randomizer(arr, num) {
+  return `${arr[num % arr.length]}`;
 }
 
-async function createCSV(writer, content, encoding, callback, header, rows) {
+function createListing(num) {
+  return `${addressMaker(num)},${randomizer(c.price, num)},${randomizer(num10, num)},${randomizer(num10, num)},${randomizer(boolean, num + 1)},${randomizer(boolean, num + 2)},${randomizer(boolean, num + 3)},${randomizer(boolean, num + 4)},${lorem.generateSentences(2)},${randomizer(c.sqft, num)},${randomizer(boolean, num + 5)},${randomizer(propertyType, num)},${num},${num},${num}\n`;
+}
+function createAgent(num) {
+  return `${randomizer(c.firstName, num)},${randomizer(c.lastName, num)},${randomizer(c.emails, num)},${randomizer(c.phone, num)}\n`;
+}
+function createOwner(num) {
+  return `${randomizer(c.userName, num)},${randomizer(c.passwords, num)},${randomizer(c.firstName, num + 4)},${randomizer(c.lastName, num + 4)},${randomizer(c.emails, num + 4)},${randomizer(c.phone, num + 4)},${randomizer(status, num)},${randomizer(boolean, num + 6)}\n`;
+}
+function createAmenities(num) {
+  return `${randomizer(boolean, num + 1)},${randomizer(boolean, num + 2)},${randomizer(boolean, num + 3)},${randomizer(boolean, num + 4)},${randomizer(boolean, num + 5)},${randomizer(boolean, num + 6)},${randomizer(boolean, num + 7)},${randomizer(boolean, num + 8)},${randomizer(boolean, num + 9)}\n`;
+}
+function createImages(num) {
+  return `${(num % 50) + 1},https://picsum.photos/200/300,${lorem.generateSentences(1)}\n`;
+}
+
+async function createCSV(target, rows) {
+  function callbackFunc(dataName, err) {
+    if (err) {
+      console.log(`everything got fucked up because of ${err}`);
+    } else {
+      console.log(`finished seeding ${dataName}`);
+    }
+  }
+  let writer;
+  let header;
+  let content;
+  if (target === 'listing') {
+    writer = stream.listing;
+    header = columns.listing;
+    content = createListing;
+  }
+  if (target === 'agent') {
+    writer = stream.agent;
+    header = columns.agent;
+    content = createAgent;
+  }
+  if (target === 'owner') {
+    writer = stream.owner;
+    header = columns.owner;
+    content = createOwner;
+  }
+  if (target === 'amenities') {
+    writer = stream.amenities;
+    header = columns.amenities;
+    content = createAmenities;
+  }
+  if (target === 'images') {
+    writer = stream.images;
+    header = columns.images;
+    content = createImages;
+  }
+
   let i = rows;
   await write();
   function write() {
@@ -51,16 +112,16 @@ async function createCSV(writer, content, encoding, callback, header, rows) {
     do {
       if (i === rows) {
         // first time! write header
-        writer.write(header, encoding);
+        writer.write(header, 'utf8');
       }
       i--;
       if (i === 0) {
         // Last time!
-        writer.write(content, encoding, callback);
+        writer.write(content(i), 'utf8', () => callbackFunc(target));
       } else {
         // See if we should continue, or wait.
         // Don't pass the callback, because we're not done yet.
-        ok = writer.write(content, encoding);
+        ok = writer.write(content(i), 'utf8');
       }
     } while (i > 0 && ok);
     if (i > 0) {
@@ -71,8 +132,8 @@ async function createCSV(writer, content, encoding, callback, header, rows) {
   }
 }
 
-createCSV(stream.listing, data.listing, 'utf8', () => callbackFunc('listings'), columns.listing, 10000000);
-createCSV(stream.user_data, data.user_data, 'utf8', () => callbackFunc('user_data'), columns.user_data, 10000000);
-createCSV(stream.agents, data.agents, 'utf8', () => callbackFunc('agents'), columns.agents, 10000000);
-createCSV(stream.amenities, data.amenities, 'utf8', () => callbackFunc('amenities'), columns.amenities, 10000000);
-createCSV(stream.images, data.images, 'utf8', () => callbackFunc('images'), columns.images, 50000000);
+createCSV('listing', 100);
+createCSV('owner', 100);
+createCSV('agent', 100);
+createCSV('amenities', 100);
+createCSV('images', 500);
