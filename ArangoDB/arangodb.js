@@ -1,25 +1,34 @@
-// INITIALIZE CONNECTION WITH DEFAULT VALUES
+/* eslint-disable indent */
 const db = require('arangojs')();
-const addSecurity = require('./arangoSecurity');
 
-// CHANGE ROOT PASSWORD
-addSecurity();
+const cred = require('./credentials');
 
-db.createDatabase('mydb')
-  .then(
-    () => console.log('Database created'),
-    (err) => console.error('Failed to create database:', err),
-  );
-db.useDatabase('mydb'); // add to above promise?
+const collection = db.collection('firstCollection');
 
-// COLLECTION CREATION
+db.createDatabase('mydb').then(
+  () => console.log('Database created'),
+  (err) => {
+    console.error('Failed to create database: err');
+  },
+);
+// db.createDatabase('mydb');
+db.useDatabase('mydb');
 
-db.drop('listings');
-db.create('listings')
-  .then(
-    () => console.log('Collection created'),
-    (err) => console.error('Failed to create collection:', err),
-  );
+
+collection.create().then(
+  () => console.log('Collection created'),
+  (err) => console.error('Failed to create collection:', err),
+);
+
+collection.truncate().then(
+  () => console.log('Truncated collection'),
+  (err) => console.error('Failed to truncate:', err),
+);
+// initialize connection with default attributes
+// check for "listings" collection
+  // yes? then drop
+  // no? do nothing
+// create new listing collection
 
 // / IF USING ARANGO GRAPH \
 
@@ -107,11 +116,11 @@ const listingSchema = { // remove ALL constraints for seeds
           minLength: 5,
           maxLength: 30,
         },
-        phone : {
+        phone: {
           type: 'string',
           minLength: 10,
           maxLength: 22,
-          pattern: ^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}, // EXTREME CAUTION, HIGHLY RATED BUT MAY BE TOO COMPLEX
+          pattern: '^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}', // EXTREME CAUTION, HIGHLY RATED BUT MAY BE TOO COMPLEX
         },
       },
       users: {
@@ -128,7 +137,8 @@ const listingSchema = { // remove ALL constraints for seeds
           type: 'string',
           minLength: 1,
           maxLength: 100,
-        },//'seeding side: UPDATE (query) SET pswhash = crypt(`newpassword`, gen_salt(`md5`))',
+        },
+        //  'seeding side: UPDATE (query) SET pswhash = crypt(`newpassword`, gen_salt(`md5`))',
         first_name: {
           type: 'string',
           minLength: 1,
@@ -148,7 +158,7 @@ const listingSchema = { // remove ALL constraints for seeds
           type: 'string',
           minLength: 10,
           maxLength: 22,
-          pattern: ^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}, // EXTREME CAUTION, HIGHLY RATED BUT MAY BE TOO COMPLEX
+          pattern: '^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}', // EXTREME CAUTION, HIGHLY RATED BUT MAY BE TOO COMPLEX
         },
         owner_status: { // must be select type on front end, also strict per Capitalization
           type: 'string',
@@ -156,7 +166,7 @@ const listingSchema = { // remove ALL constraints for seeds
             'Property Owner',
             'Property Manager',
             'Bank Owned',
-          ]
+          ],
         },
         rental_applications: {
           type: 'boolean',
@@ -167,43 +177,43 @@ const listingSchema = { // remove ALL constraints for seeds
         amenities_no: { // add index???
           type: 'number',
           minimum: 0,
-        }
+        },
         ac: {
-        type: 'boolean',
-        default: false,
-      },
+          type: 'boolean',
+          default: false,
+        },
         balcony_deck: {
-        type: 'boolean',
-        default: false,
-      },
+          type: 'boolean',
+          default: false,
+        },
         furnished: {
-        type: 'boolean',
-        default: false,
-      },
+          type: 'boolean',
+          default: false,
+        },
         hardwood: {
-        type: 'boolean',
-        default: false,
-      },
+          type: 'boolean',
+          default: false,
+        },
         wheelchair: {
-        type: 'boolean',
-        default: false,
-      },
+          type: 'boolean',
+          default: false,
+        },
         garage_parking: {
-        type: 'boolean',
-        default: false,
-      },
+          type: 'boolean',
+          default: false,
+        },
         off_street_parking: {
-        type: 'boolean',
-        default: false,
-      },
+          type: 'boolean',
+          default: false,
+        },
         laundry: {
-        type: 'boolean',
-        default: false,
-      },
+          type: 'boolean',
+          default: false,
+        },
         pets: {
-        type: 'boolean',
-        default: false,
-      },
+          type: 'boolean',
+          default: false,
+        },
       },
     },
     required: [
