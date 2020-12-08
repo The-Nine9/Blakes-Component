@@ -37,7 +37,7 @@ while true; do
         PGPASSWORD=${pswd} psql -U postgres ${db} -c "\copy amenities(ac, balcony_deck, furnished, hardwood, wheelchair, garage_parking, off_street_parking, laundry, pets) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/amenities.csv' DELIMITER ',' CSV HEADER;";
         tput setaf 2; echo "AMENITIES TABLE POPULATED"; tput sgr0;
         echo "SEEDING LISTING TABLE";
-        PGPASSWORD=${pswd} psql -U postgres ${db} -c "\copy listing(address, price, bed, bath, sale, pending, new, construction, description, sqft, shared, property_type, agent, owner, amenities) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/listings.csv' DELIMITER ',' CSV HEADER;";
+        PGPASSWORD=${pswd} psql -U postgres ${db} -c "\copy listing(address, price, beds, baths, sale, pending, new, construction, description, sqft, shared, property_type, agent, owner, amenities) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/listings.csv' DELIMITER ',' CSV HEADER;";
         tput setaf 2; echo "LISTING TABLE POPULATED"; tput sgr0;
         echo "SEEDING IMAGES TABLE";
         PGPASSWORD=${pswd} psql -U postgres ${db} -c "\copy images(listing, url, description) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/images.csv' DELIMITER ',' CSV HEADER;";

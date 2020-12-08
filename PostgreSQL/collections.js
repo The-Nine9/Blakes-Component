@@ -1,14 +1,3 @@
-// const array = require('./dummy');
-
-// function maker() {
-//   const arr = [];
-//   for (let i = 0; i < array.length; i++) {
-//     arr.push(array[i].sqft);
-//   }
-//   return arr;
-// }
-// maker();
-// console.log(maker());
 module.exports.sqft = [
   5940, 1136, 11690, 1260, 3395, 9209,
   2233, 9812, 10702, 1597, 2803, 980,
@@ -91,6 +80,12 @@ module.exports.street = [
   'Killdeer', 'Warrior', 'Barby',
   'Toban', 'Huxley', 'Delladonna',
   'Dexter',
+];
+module.exports.suffix = [
+  'thing', 'Road', 'Lane', 'Way',
+  'Court', 'Street', 'Trail', 'Point',
+  'Avenue', 'Circle', 'Crossing', 'Junction',
+  'Terrace', 'Plaza',
 ];
 module.exports.num = [
   '5', '97197', '1', '55',

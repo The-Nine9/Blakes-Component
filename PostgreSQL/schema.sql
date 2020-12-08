@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS amenities;
 
 CREATE TABLE listing (
   id SERIAL PRIMARY KEY,
-  address VARCHAR(50) NOT NULL, --unique after seeding
+  address VARCHAR(100) NOT NULL, --unique after seeding
   price INTEGER NOT NULL, -- CHECK ( price > 0 AND price < 1000000000),
   beds SMALLINT NOT NULL, -- CHECK ( bed > 0 AND bed < 100 ),
   baths SMALLINT NOT NULL,-- CHECK ( bath > 0 AND bath < 100 ),
@@ -31,9 +31,9 @@ CREATE TABLE listing (
   sqft INTEGER NOT NULL,-- add sqftage
   shared BOOLEAN DEFAULT(false),
   property_type VARCHAR(30) NOT NULL,
-  agent_num INTEGER NOT NULL,--foreign key
-  owner_num INTEGER NOT NULL,--foreign key
-  amenities_num INTEGER NOT NULL -- add detail foreign key
+  agent INTEGER NOT NULL,--foreign key
+  owner INTEGER NOT NULL,--foreign key
+  amenities INTEGER NOT NULL -- add detail foreign key
 );
 
 -- add listing agent table (contact info)

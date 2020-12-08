@@ -46,14 +46,14 @@ const boolean = [1, 0, 0, 1, 1, 0, 1, 0];
 const propertyType = ['Single Family Home', 'Apartment', 'Condo', 'Cabin'];
 const status = ['Owner', 'Realtor', 'Bank Representative'];
 function addressMaker(i) {
-  return `${c.num[i % c.num.length]} ${c.street[i % c.street.length]}\, ${c.city[i % c.city.length]}\, ${c.state[i % c.state.length]} ${c.zip[i % c.zip.length]} `;
+  return `${c.num[i % c.num.length]} ${c.street[i % c.street.length]} ${c.suffix[i % c.suffix.length]}\, ${c.city[i % c.city.length]}\, ${c.state[i % c.state.length]} ${c.zip[i % c.zip.length]}`;
 }
 function randomizer(arr, num) {
   return `${arr[num % arr.length]}`;
 }
 
 function createListing(num) {
-  return `${addressMaker(num)},${randomizer(c.price, num)},${randomizer(num10, num)},${randomizer(num10, num)},${randomizer(boolean, num + 1)},${randomizer(boolean, num + 2)},${randomizer(boolean, num + 3)},${randomizer(boolean, num + 4)},${lorem.generateSentences(2)},${randomizer(c.sqft, num)},${randomizer(boolean, num + 5)},${randomizer(propertyType, num)},${num},${num},${num}\n`;
+  return `"${addressMaker(num)}",${randomizer(c.price, num)},${randomizer(num10, num)},${randomizer(num10, num)},${randomizer(boolean, num + 1)},${randomizer(boolean, num + 2)},${randomizer(boolean, num + 3)},${randomizer(boolean, num + 4)},${lorem.generateSentences(2)},${randomizer(c.sqft, num)},${randomizer(boolean, num + 5)},${randomizer(propertyType, num)},${num},${num},${num}\n`;
 }
 function createAgent(num) {
   return `${randomizer(c.firstName, num)},${randomizer(c.lastName, num)},${randomizer(c.emails, num)},${randomizer(c.phone, num)}\n`;
@@ -132,8 +132,8 @@ async function createCSV(target, rows) {
   }
 }
 
-createCSV('listing', 100);
-createCSV('owner', 100);
-createCSV('agent', 100);
-createCSV('amenities', 100);
-createCSV('images', 500);
+createCSV('listing', 10000000);
+createCSV('owner', 10000000);
+createCSV('agent', 10000000);
+createCSV('amenities', 10000000);
+createCSV('images', 50000000);
