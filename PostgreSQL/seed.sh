@@ -77,9 +77,10 @@ while true; do
 done
 
 while true; do
-    read -p "do you wish add foreign key constraint LISTING to IMAGES table?" yn
+    read -p "do you wish add foreign key and index constraint LISTING to IMAGES table?" yn
     case $yn in
-        [Yy]* ) PGPASSWORD=${pswd} psql -U postgres ${db} -c "ALTER TABLE images ADD CONSTRAINT listingfk FOREIGN KEY (listing) REFERENCES listing (id) MATCH FULL"; tput setaf 2; echo "FOREIGN KEY ADDED"; tput sgr0; break;;
+        [Yy]* ) PGPASSWORD=${pswd} psql -U postgres ${db} -c "ALTER TABLE images ADD CONSTRAINT listingfk FOREIGN KEY (listing) REFERENCES listing (id) MATCH FULL"; tput setaf 2; echo "FOREIGN KEY ADDED"; tput sgr0;
+        PGPASSWORD=${pswd} psql -U postgres ${db} -c "CREATE INDEX idx_listing ON images(listing)"; tput setaf 2; echo "INDEX ADDED"; tput sgr0; break;;
         [Nn]* ) tput setaf 1; echo "im sorry to hear that"; tput sgr0; break;;
         * ) tput setaf 1; echo "Please answer yes or no."; tput sgr0 ;;
     esac

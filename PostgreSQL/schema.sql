@@ -31,9 +31,9 @@ CREATE TABLE listing (
   sqft INTEGER NOT NULL,-- add sqftage
   shared BOOLEAN DEFAULT(false),
   property_type VARCHAR(30) NOT NULL,
-  agent INTEGER NOT NULL,--foreign key
-  owner INTEGER NOT NULL,--foreign key
-  amenities INTEGER NOT NULL -- add detail foreign key
+  agent INTEGER NOT NULL,-- foregn key & index
+  owner INTEGER NOT NULL,--foreign key & index
+  amenities INTEGER NOT NULL -- foreign key & index
 );
 
 -- add listing agent table (contact info)
@@ -75,7 +75,7 @@ CREATE TABLE amenities (
 
 CREATE TABLE images ( -- keep track of image order
   id SERIAL PRIMARY KEY,
-  listing INT,
+  listing INT, -- foregn key & index
   url VARCHAR(100) NOT NULL,
   description VARCHAR(500) NOT NULL -- LOSE IF SEEDING IS SLOW
     --CONSTRAINT fk_listing -- only used to give name to constraint (not required)
@@ -85,3 +85,18 @@ CREATE TABLE images ( -- keep track of image order
 
 --CLIENT -> SERVER -> DB COPY METHOD EXAMPLE
 -- \copy images(url, description) FROM '/Users/blake/Desktop/SDC/Main-Gallery/PostgreSQL/z_csv/images.csv' DELIMITER ',' CSV HEADER;
+
+-- select * from listing, images, amenities, agent, owner where amenities.id = listing.id and agent.id = listing.id and owner.id = listing.id and images.listing = listing.id and listing.id = 1
+
+-- select * from listing
+-- left join agent
+-- on listing.agent = agent.id
+-- left join amenities
+-- on listing.amenities = amenities.id
+-- left join owner
+-- on listing.owner = owner.id
+-- right outer join images
+-- on images.listing = listing.id
+-- where listing.id = 1;
+
+-- http://127.0.0.1:52969/browser/
