@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable indent */
 const db = require('arangojs')();
 
@@ -58,7 +59,7 @@ const listingSchema = { // remove ALL constraints for seeds
         type: 'string',
         minLength: 2,
         maxLength: 100,
-        pattern: /^\d+\s[A-z]+\s[A-z]+/g,
+        pattern: "/^\\d+\\s[A-z]+\\s[A-z]+/g",
       },
       price: {
         type: 'number',
@@ -120,7 +121,7 @@ const listingSchema = { // remove ALL constraints for seeds
           type: 'string',
           minLength: 10,
           maxLength: 22,
-          pattern: '^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}', // EXTREME CAUTION, HIGHLY RATED BUT MAY BE TOO COMPLEX
+          pattern: "/^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}/",
         },
       },
       users: {
@@ -158,7 +159,7 @@ const listingSchema = { // remove ALL constraints for seeds
           type: 'string',
           minLength: 10,
           maxLength: 22,
-          pattern: '^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}', // EXTREME CAUTION, HIGHLY RATED BUT MAY BE TOO COMPLEX
+          pattern: "/^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}/", // EXTREME CAUTION, HIGHLY RATED BUT MAY BE TOO COMPLEX
         },
         owner_status: { // must be select type on front end, also strict per Capitalization
           type: 'string',

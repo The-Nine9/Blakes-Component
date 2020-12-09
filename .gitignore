@@ -27,6 +27,6 @@ client/dist/bundle.js
 node_modules
 
 ## Large Files
-z_json
+listings.json
 ## Security
 arangoSecurity.js
