@@ -1,3 +1,5 @@
+/* eslint-disable vars-on-top */
+/* eslint-disable no-var */
 /* eslint-disable quotes */
 /* eslint-disable indent */
 const db = require('arangojs')();
@@ -45,7 +47,7 @@ remain in place. */
 // listing schema, add saved comp
 // full address schema
 
-const listingSchema = { // remove ALL constraints for seeds
+var listingSchema = { // remove ALL constraints for seeds
   message: 'Customer Validation Failed',
   level: 'strict',
   rule: {
@@ -236,7 +238,7 @@ const listingSchema = { // remove ALL constraints for seeds
       'amenities',
       'images',
     ],
-    additionalProperties: 'False',
+    additionalProperties: false,
   },
 };
 

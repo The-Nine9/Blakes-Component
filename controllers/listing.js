@@ -1,5 +1,5 @@
-var listings = require('../db/schema.js');
-var mongo = require('../db/mongo.js');
+const listings = require('../db/schema.js');
+const arango = require('../db/mongo.js');
 
 /* eslint-disable array-callback-return */
 // const schema = require('../db/schema.js');
@@ -12,16 +12,15 @@ getListings = (req, res) => {
   mongo.connect();
   query.find((err, listings) => {
     if (err) {
-      res.status(404)
+      res.status(404);
       console.log(err.message);
       mongo.db.close();
     } else {
       res.status(200).send(listings);
       mongo.db.close();
     }
-  }
-  )
-}
+  });
+};
 
 post = (req, res) => {
   mongo.connect();
@@ -34,8 +33,8 @@ post = (req, res) => {
       res.status(200).send(data);
       mongo.db.close();
     }
-  })
-}
+  });
+};
 
 put = (req, res) => {
   mongo.connect();
@@ -49,8 +48,8 @@ put = (req, res) => {
       res.status(200).send('success');
       mongo.db.close();
     }
-  })
-}
+  });
+};
 
 remove = (req, res) => {
   mongo.connect();
@@ -64,41 +63,15 @@ remove = (req, res) => {
       res.status(200).send('success');
       mongo.db.close();
     }
-  })
-}
+  });
+};
 
 module.exports = {
   getListings,
   post,
   put,
   remove,
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};
 
 // module.exports = {
 //   get: (req, res) => {
@@ -126,5 +99,3 @@ module.exports = {
 //     });
 //   },
 // };
-
-
