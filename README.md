@@ -1,30 +1,10 @@
-# Project Name
+MAIN GALLERY
 
-> Project description
+> A stress tested, and scaled to 10mil active users while maintaining [metric] response time
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-
-## Table of Contents
-
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-
-## Usage
-
-> Some usage instructions
-
-## Requirements
-
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
-- etc
+  - https://github.com/the-nine9/Blakes-proxy
 
 ## Development
 
