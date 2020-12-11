@@ -30,3 +30,4 @@ node_modules
 listings.json
 ## Security
 arangoSecurity.js
+setAuth.sh
