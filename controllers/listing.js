@@ -1,5 +1,5 @@
-const listings = require('../db/schema.js');
-const arango = require('../db/mongo.js');
+// const listings = require('../db/schema.js');
+// const arango = require('../db/mongo.js');
 
 /* eslint-disable array-callback-return */
 // const schema = require('../db/schema.js');
