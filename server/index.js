@@ -1,9 +1,17 @@
-
+/* eslint-disable no-restricted-syntax */
 require('newrelic');
+const { Database, aql } = require('arangojs');
 const express = require('express');
+const compression = require('compression');
 const bodyParser = require('body-parser');
-const controller = require('../controllers/listing.js');
+// const controller = require('../controllers/listing.js');
+// const arango = require('../ArangoDB/connection');
 
+const config = require('../ArangoDB/config');
+
+const db = new Database(config);
+
+const listings = db.collection('listings');
 
 // const path = require('path')
 
@@ -12,15 +20,10 @@ const PORT = 8040;
 
 app.use(bodyParser.json());
 
-app.use('/home/:id', express.static('client/dist'));
-
-
-
+app.use(compression());
 // app.get('/listings/:id/db', controller.getAll);
 
-app.listen(PORT, () => {
-  console.log(`Listening on 127.0.0.1:${PORT}`);
-});
+app.listen(PORT);
 
 // CRUD
 
@@ -35,14 +38,29 @@ app.get('/*/:id/homesData', async (req, res) => {
       RETURN listing
     `);
     for await (const item of listing) {
-      res.json(item);
+      res.json([{
+        listing_id: item['_key'],
+        topHeader: {
+          sale: item.sale,
+          pending: item.pending,
+          new: item.new,
+          construction: item.construction,
+        },
+        address: item.address,
+        price: item.price,
+        bed: item.beds,
+        bath: item.baths,
+        images: item.images,
+      }]);
     }
   } catch (err) {
     res.status(400).send();
   }
+});
 
-app.post('/*/:id/addHomeData', controller.post);
-app.put('/*/:id/updateHomeData', controller.put);
-app.delete('/*/:id/removeHomeData', controller.remove);
+app.use('/home/:id', express.static('client/dist'));
+// app.post('/*/:id/addHomeData', controller.post);
+// app.put('/*/:id/updateHomeData', controller.put);
+// app.delete('/*/:id/removeHomeData', controller.remove);
 
-app.patch('/*/:id/gallery', controller.addImage);
+// app.patch('/*/:id/gallery', controller.addImage);

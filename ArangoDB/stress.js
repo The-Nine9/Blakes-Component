@@ -1,5 +1,7 @@
-import { sleep } from "k6";
+import { sleep, check } from "k6";
 import http from "k6/http";
+
+// ramping stress test
 
 export const options = {
   scenarios: {
@@ -9,41 +11,40 @@ export const options = {
       startVUs: 0,
       stages: [
         { duration: '1m', target: 100 },
-        { duration: '30s', target: 1500 },
-        { duration: '3m', target: 1500 },
-        { duration: '30s', target: 2000 },
-        { duration: '30s', target: 4000 },
-        { duration: '3m', target: 2000 },
-        { duration: '30s', target: 1500 },
-        { duration: '3m', target: 1500 },
-        { duration: '30s', target: 1000 },
-        { duration: '3m', target: 1000 },
-        { duration: '30s', target: 750 },
-        { duration: '3m', target: 750 },
-        { duration: '30s', target: 500 },
-        { duration: '5m', target: 500 },
-        { duration: '5m', target: 200 },
-        { duration: '2m', target: 100 },
-        { duration: '5s', target: 0 },
+        { duration: '10s', target: 200 },
+        { duration: '1m', target: 200 },
+        { duration: '10s', target: 500 },
+        { duration: '10s', target: 750 },
+        { duration: '1m', target: 750 },
+        { duration: '10s', target: 1000 },
+        { duration: '1m', target: 1000 },
+        { duration: '1s', target: 0 },
       ],
       gracefulRampDown: '5s',
     },
   },
 };
 
+// working load test
+
+// export const options = {
+//   stages = [
+//     { duration: '10s', target: 200 },
+//     { duration: '40s', target: 200 },
+//     { duration: '10s', target: 0 },
+//   ]
+// }
+
 export default function main() {
+  const res = http.get('http://test.k6.io');
+
   let response;
   const id = Math.floor(1 + Math.random() * 10000000);
-  response = http.get(`http://127.0.0.1:8040/gallery/${id}/homesData`);
+  response = http.get(`http://127.0.0.1:8040/home/${id}/homesData`);
 
+  const checkRes = check(res, {
+    'status is 200': (r) => r.status === 200,
+  });
   // Automatically added sleep
   sleep(1);
 }
-// docker run \
-//   -d --restart unless-stopped \
-//   --name newrelic-statsd \
-//   -h $(hostname) \
-//   -e NR_ACCOUNT_ID=2979621 \
-//   -e NR_API_KEY="NRII-5ybaCxAYGp9AfTKNSPi1KYVMkuGN7I_A" \
-//   -p 8125:8125/udp \
-//   newrelic/nri-statsd:latest

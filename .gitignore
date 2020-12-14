@@ -29,5 +29,5 @@ node_modules
 ## Large Files
 listings.json
 ## Security
-arangoSecurity.js
+config.js
 setAuth.sh
