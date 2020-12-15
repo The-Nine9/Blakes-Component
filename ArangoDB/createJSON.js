@@ -20,10 +20,18 @@ const lorem = new LoremIpsum({
 
 const file = {
   listing: path.join(__dirname, 'z_json/listings.json'),
+  listing1: path.join(__dirname, 'z_json/listings1.json'),
+  listing2: path.join(__dirname, 'z_json/listings2.json'),
+  listing3: path.join(__dirname, 'z_json/listings3.json'),
+  listing4: path.join(__dirname, 'z_json/listings4.json'),
 };
 
 const stream = {
   listing: fs.createWriteStream(file.listing),
+  listing1: fs.createWriteStream(file.listing1),
+  listing2: fs.createWriteStream(file.listing2),
+  listing3: fs.createWriteStream(file.listing3),
+  listing4: fs.createWriteStream(file.listing4),
 };
 
 const num10 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -101,11 +109,11 @@ function callbackFunc(dataName, err) {
   stream.listing.end();
 }
 
-async function createJSON(writer, encoding, callback, rows) {
-  let i = rows - 3024194;
+async function createJSON(writer, encoding, callback, start, stop) {
+  let i = stop;
   let perc = 0;
-  const limit = i / 100;
-  let num = 1 + 3024194;
+  // const limit = i / 100;
+  let num = start;
   await write();
   function write() {
     let ok = true;
@@ -117,12 +125,11 @@ async function createJSON(writer, encoding, callback, rows) {
         // Last time!
         writer.write(listing, encoding, callback);
       } else {
-
         if (i % 100000 === 0) {
           perc++;
           exec(`cowsay ${perc}%`, (error, stdout, stderr) => {
             console.log(stdout);
-          })
+          });
         }
         // See if we should continue, or wait.
         // Don't pass the callback, because we're not done yet.
@@ -137,4 +144,8 @@ async function createJSON(writer, encoding, callback, rows) {
   }
 }
 
-createJSON(stream.listing, 'utf8', () => callbackFunc('listings'), 10000000);
+createJSON(stream.listing, 'utf8', () => callbackFunc('listings'), 1, 2000000);
+createJSON(stream.listing1, 'utf8', () => callbackFunc('listings'), 2000001, 4000000);
+createJSON(stream.listing2, 'utf8', () => callbackFunc('listings'), 4000001, 6000000);
+createJSON(stream.listing3, 'utf8', () => callbackFunc('listings'), 6000001, 8000000);
+createJSON(stream.listing4, 'utf8', () => callbackFunc('listings'), 8000001, 10000000);

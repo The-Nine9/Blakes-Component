@@ -30,7 +30,16 @@ while true; do
         echo "please enter the number of threads you with to use";
         read threads;
         echo "BEGINNING TO SEED DB";
-        arangoimport --file "/Users/blake/Desktop/SDC/Main-Gallery/ArangoDB/z_json/listings.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd} --overwrite true --create-collection true --create-database true;
+        echo "Stage 1";
+        arangoimport --file "/home/ec2_user/Main-Gallery/ArangoDB/z_json/listings.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd} --overwrite true --create-collection true --create-database true;
+        echo "Stage 2";
+        arangoimport --file "/home/ec2_user/Main-Gallery/ArangoDB/z_json/listings1.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd} --overwrite true --create-collection true --create-database true;
+        echo "Stage 3";
+        arangoimport --file "/home/ec2_user/Main-Gallery/ArangoDB/z_json/listings2.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd} --overwrite true --create-collection true --create-database true;
+        echo "Stage 4";
+        arangoimport --file "/home/ec2_user/Main-Gallery/ArangoDB/z_json/listings3.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd} --overwrite true --create-collection true --create-database true;
+        echo "Stage 5";
+        arangoimport --file "/home/ec2_user/Main-Gallery/ArangoDB/z_json/listings4.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd} --overwrite true --create-collection true --create-database true;
         tput setaf 2;
         echo "-------------SEEDING COMPLETE!!!---------------";
         tput sgr0; break;;
