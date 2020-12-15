@@ -31,15 +31,15 @@ while true; do
         read threads;
         echo "BEGINNING TO SEED DB";
         echo "Stage 1";
-        arangoimport --file "/home/ec2-user/Main-Gallery/ArangoDB/z_json/listings.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd} --overwrite true --create-collection true --create-database true;
+        arangoimport --file "/home/ec2-user/Main-Gallery/ArangoDB/z_json/listings.json" --type jsonl --server.database ${db} --batch-size 10000000 ${db} --collection ${collection} --threads ${threads} --server.password ${pswd} --overwrite true --create-collection true --create-database true;
         echo "Stage 2";
-        arangoimport --file "/home/ec2-user/Main-Gallery/ArangoDB/z_json/listings1.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd}
+        arangoimport --file "/home/ec2-user/Main-Gallery/ArangoDB/z_json/listings1.json" --type jsonl --server.database ${db} --batch-size 10000000 --collection ${collection} --threads ${threads} --server.password ${pswd}
         echo "Stage 3";
-        arangoimport --file "/home/ec2-user/Main-Gallery/ArangoDB/z_json/listings2.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd}
+        arangoimport --file "/home/ec2-user/Main-Gallery/ArangoDB/z_json/listings2.json" --type jsonl --server.database ${db} --batch-size 10000000 --collection ${collection} --threads ${threads} --server.password ${pswd}
         echo "Stage 4";
-        arangoimport --file "/home/ec2-user/Main-Gallery/ArangoDB/z_json/listings3.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd}
+        arangoimport --file "/home/ec2-user/Main-Gallery/ArangoDB/z_json/listings3.json" --type jsonl --server.database ${db} --batch-size 10000000 --collection ${collection} --threads ${threads} --server.password ${pswd}
         echo "Stage 5";
-        arangoimport --file "/home/ec2-user/Main-Gallery/ArangoDB/z_json/listings4.json" --type json --server.endpoint "http+tcp://127.0.0.1:8529" --server.database ${db} --collection ${collection} --threads ${threads} --server.password ${pswd}
+        arangoimport --file "/home/ec2-user/Main-Gallery/ArangoDB/z_json/listings4.json" --type jsonl --server.database ${db} --batch-size 10000000 --collection ${collection} --threads ${threads} --server.password ${pswd}
         tput setaf 2;
         echo "-------------SEEDING COMPLETE!!!---------------";
         tput sgr0; break;;
