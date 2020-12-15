@@ -121,7 +121,7 @@ async function createJSON(writer, encoding, callback, start, stop) {
       i--;
       const listing = createListing(num);
       num++;
-      if (i === 0) {
+      if (i === stop) {
         // Last time!
         writer.write(listing, encoding, callback);
       } else {
@@ -135,8 +135,8 @@ async function createJSON(writer, encoding, callback, start, stop) {
         // Don't pass the callback, because we're not done yet.
         ok = writer.write(listing, encoding);
       }
-    } while (i > 0 && ok);
-    if (i > 0) {
+    } while (i > stop && ok);
+    if (i > stop) {
       // Had to stop early!
       // Write some more once it drains.
       writer.once('drain', write);

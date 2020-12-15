@@ -27,7 +27,7 @@ client/dist/bundle.js
 node_modules
 
 ## Large Files
-listings.json
+listings*.json
 ## Security
 config.js
 setAuth.sh
