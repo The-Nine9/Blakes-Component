@@ -109,9 +109,8 @@ function callbackFunc(dataName, err) {
   stream.listing.end();
 }
 
-async function createJSON(writer, encoding, callback, start, stop) {
+async function createJSON(writer, encoding, callback, start, stop, perc) {
   let i = stop;
-  let perc = 0;
   let num = start;
   await write();
   function write() {
@@ -126,7 +125,7 @@ async function createJSON(writer, encoding, callback, start, stop) {
       } else {
         if (i % 100000 === 0) {
           perc++;
-          exec(`cowsay ${perc}%`, (error, stdout, stderr) => {
+          exec(`cowsay -f head-in ${perc}%`, (error, stdout, stderr) => {
             console.log(stdout);
           });
         }
@@ -134,7 +133,7 @@ async function createJSON(writer, encoding, callback, start, stop) {
         // Don't pass the callback, because we're not done yet.
         ok = writer.write(listing, encoding);
       }
-    } while (i > start && ok);
+    } while (i > 0 && ok);
     if (i > start) {
       // Had to stop early!
       // Write some more once it drains.
@@ -142,11 +141,11 @@ async function createJSON(writer, encoding, callback, start, stop) {
     }
   }
 }
-const seed = async function () {
-  await createJSON(stream.listing, 'utf8', () => callbackFunc('listings'), 1, 2000000);
-  await createJSON(stream.listing1, 'utf8', () => callbackFunc('listings'), 2000001, 4000000);
-  await createJSON(stream.listing2, 'utf8', () => callbackFunc('listings'), 4000001, 6000000);
-  await createJSON(stream.listing3, 'utf8', () => callbackFunc('listings'), 6000001, 8000000);
-  await createJSON(stream.listing4, 'utf8', () => callbackFunc('listings'), 8000001, 10000000);
+const seed = () => {
+  createJSON(stream.listing, 'utf8', () => callbackFunc('listings'), 1, 2000000, 0);
+  createJSON(stream.listing1, 'utf8', () => callbackFunc('listings'), 2000001, 4000000, 20);
+  createJSON(stream.listing2, 'utf8', () => callbackFunc('listings'), 4000001, 6000000, 40);
+  createJSON(stream.listing3, 'utf8', () => callbackFunc('listings'), 6000001, 8000000, 60);
+  createJSON(stream.listing4, 'utf8', () => callbackFunc('listings'), 8000001, 10000000, 80);
 };
 seed();
