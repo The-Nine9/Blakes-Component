@@ -13,7 +13,8 @@
     "seed": "ArangoDB/seed.sh",
     "stress": "k6 run ArangoDB/stress.js",
     "test": "jest",
-    "lint": "./node_modules/.bin/eslint"
+    "lint": "./node_modules/.bin/eslint",
+    "kickoff":"ArangoDB/Kickoff.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

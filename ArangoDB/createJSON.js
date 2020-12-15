@@ -102,10 +102,10 @@ function callbackFunc(dataName, err) {
 }
 
 async function createJSON(writer, encoding, callback, rows) {
-  let i = rows;
+  let i = rows - 3024194;
   let perc = 0;
   const limit = i / 100;
-  let num = 1;
+  let num = 1 + 3024194;
   await write();
   function write() {
     let ok = true;
