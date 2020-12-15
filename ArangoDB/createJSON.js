@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-use-before-define */
+const { exec } = require('child_process');
 const { LoremIpsum } = require('lorem-ipsum');
 const fs = require('fs');
 const path = require('path');
@@ -102,6 +103,8 @@ function callbackFunc(dataName, err) {
 
 async function createJSON(writer, encoding, callback, rows) {
   let i = rows;
+  let perc = 0;
+  const limit = i / 100;
   let num = 1;
   await write();
   function write() {
@@ -114,6 +117,13 @@ async function createJSON(writer, encoding, callback, rows) {
         // Last time!
         writer.write(listing, encoding, callback);
       } else {
+
+        if (i % 100000 === 0) {
+          perc++;
+          exec(`cowsay ${perc}%`, (error, stdout, stderr) => {
+            console.log(stdout);
+          })
+        }
         // See if we should continue, or wait.
         // Don't pass the callback, because we're not done yet.
         ok = writer.write(listing, encoding);
