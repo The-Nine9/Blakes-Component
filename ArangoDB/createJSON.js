@@ -112,7 +112,6 @@ function callbackFunc(dataName, err) {
 async function createJSON(writer, encoding, callback, start, stop) {
   let i = stop;
   let perc = 0;
-  // const limit = i / 100;
   let num = start;
   await write();
   function write() {
@@ -121,7 +120,7 @@ async function createJSON(writer, encoding, callback, start, stop) {
       i--;
       const listing = createListing(num);
       num++;
-      if (i === stop) {
+      if (i === start) {
         // Last time!
         writer.write(listing, encoding, callback);
       } else {
@@ -135,17 +134,19 @@ async function createJSON(writer, encoding, callback, start, stop) {
         // Don't pass the callback, because we're not done yet.
         ok = writer.write(listing, encoding);
       }
-    } while (i > stop && ok);
-    if (i > stop) {
+    } while (i > start && ok);
+    if (i > start) {
       // Had to stop early!
       // Write some more once it drains.
       writer.once('drain', write);
     }
   }
 }
-
-createJSON(stream.listing, 'utf8', () => callbackFunc('listings'), 1, 2000000);
-createJSON(stream.listing1, 'utf8', () => callbackFunc('listings'), 2000001, 4000000);
-createJSON(stream.listing2, 'utf8', () => callbackFunc('listings'), 4000001, 6000000);
-createJSON(stream.listing3, 'utf8', () => callbackFunc('listings'), 6000001, 8000000);
-createJSON(stream.listing4, 'utf8', () => callbackFunc('listings'), 8000001, 10000000);
+const seed = async function () {
+  await createJSON(stream.listing, 'utf8', () => callbackFunc('listings'), 1, 2000000);
+  await createJSON(stream.listing1, 'utf8', () => callbackFunc('listings'), 2000001, 4000000);
+  await createJSON(stream.listing2, 'utf8', () => callbackFunc('listings'), 4000001, 6000000);
+  await createJSON(stream.listing3, 'utf8', () => callbackFunc('listings'), 6000001, 8000000);
+  await createJSON(stream.listing4, 'utf8', () => callbackFunc('listings'), 8000001, 10000000);
+};
+seed();
